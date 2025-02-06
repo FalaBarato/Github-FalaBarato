@@ -55,101 +55,51 @@
     </div>
 </body>
 </html>
-/* Fundo dourado e azul-marinho */
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #0d1b2a, #ffcc00);
-    color: white;
-    text-align: center;
-}
-
-/* Navbar */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background: #ffcc00;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-}
-
-nav ul li {
-    margin: 0 15px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
-
-.icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-}
-
-/* Player de Música */
-.music-controls {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-#play-pause {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: white;
-    cursor: pointer;
-}
-
-#volume {
-    width: 80px;
-}
-document.addEventListener("DOMContentLoaded", function() {
-    const tabs = document.querySelectorAll(".tab-link");
-    const contents = document.querySelectorAll(".tab-content");
-    const audio = document.getElementById("musica-fundo");
-    const playPauseBtn = document.getElementById("play-pause");
-    const volumeControl = document.getElementById("volume");
-
-    audio.volume = 0.5;
-    audio.play();
-
-    playPauseBtn.addEventListener("click", () => {
-        if (audio.paused) {
-            audio.play();
-            playPauseBtn.textContent = "⏸️";
-        } else {
-            audio.pause();
-            playPauseBtn.textContent = "▶️";
-        }
-    });
-
-    volumeControl.addEventListener("input", () => {
-        audio.volume = volumeControl.value;
-    });
-
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            tabs.forEach(t => t.classList.remove("active"));
-            tab.classList.add("active");
-
-            const tabName = tab.getAttribute("data-tab");
-            contents.forEach(content => {
-                content.classList.remove("active");
-                if (content.id === tabName) {
-                    content.classList.add("active");
-                }
-            });
-        });
-    });
-});
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fala Barato - Podcast</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>🎙️ Fala Barato - Seu Podcast Favorito</h1>
+        <nav>
+            <ul>
+                <li class="tab-link active" data-tab="home">Home</li>
+                <li class="tab-link" data-tab="episodios">Episódios</li>
+                <li class="tab-link" data-tab="sobre">Sobre</li>
+            </ul>
+        </nav>
+    </header>
+    
+    <audio id="musica-fundo" loop>
+        <source src="musica-relaxante.mp3" type="audio/mpeg">
+    </audio>
+    <button id="play-pause">▶️</button>
+    <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
+    
+    <section id="home" class="tab-content active">
+        <h2>Último Episódio</h2>
+        <p>Ouça agora o episódio mais recente!</p>
+        <a href="#">🔊 Escutar no Spotify</a>
+    </section>
+    
+    <section id="episodios" class="tab-content">
+        <h2>Episódios Anteriores</h2>
+        <ul>
+            <li><a href="#">Episódio 10 - Cultura Pop</a></li>
+            <li><a href="#">Episódio 9 - Tecnologia</a></li>
+            <li><a href="#">Episódio 8 - Música</a></li>
+        </ul>
+    </section>
+    
+    <section id="sobre" class="tab-content">
+        <h2>Sobre o Podcast</h2>
+        <p>Fala Barato é um podcast descontraído sobre cultura, tecnologia e entretenimento!</p>
+    </section>
+</body>
+</html>
