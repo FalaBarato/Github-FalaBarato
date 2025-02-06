@@ -5,35 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fala Barato - Podcast</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
     <header>
-        <h1>Fala Barato</h1>
-        <p>O seu podcast favorito sobre atualidades, cultura e muito mais!</p>
+        <nav>
+            <h1>🎙️ Fala Barato</h1>
+            <ul>
+                <li class="tab-link active" data-tab="home">
+                    <img src="spotify_logo.png" alt="Spotify" class="icon"> Home
+                </li>
+                <li class="tab-link" data-tab="episodios">
+                    <img src="youtube_logo.png" alt="YouTube" class="icon"> Episódios
+                </li>
+                <li class="tab-link" data-tab="sobre">📖 Sobre</li>
+                <li class="tab-link" data-tab="contato">📩 Contato</li>
+            </ul>
+            <button id="modo-noturno">🌙</button>
+        </nav>
     </header>
-    
-    <section id="podcast">
-        <h2>Último Episódio</h2>
-        <iframe src="https://open.spotify.com/embed/episode/EXEMPLO" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-    </section>
-    
-    <section id="episodios">
-        <h2>Episódios Anteriores</h2>
-        <ul>
-            <li><a href="#">Episódio 10 - Podcast/a></li>
-            <li><a href="#">Episódio 9 - Podcast</a></li>
-            <li><a href="#">Episódio 8 - Podcast</a></li>
-        </ul>
-    </section>
-    
-    <section id="sobre">
-        <h2>Sobre o Podcast</h2>
-        <p>O Fala Barato traz discussões descontraídas sobre os temas mais quentes do momento. Apresentado por [Seu Nome], nosso objetivo é informar e entreter!</p>
-    </section>
-    
+
+    <main>
+        <section id="home" class="tab-content active">
+            <h2>📢 Último Episódio</h2>
+            <iframe src="https://open.spotify.com/embed/episode/4gKnmJl100iarWltT3dtyc" width="100%" height="232"></iframe>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+        </section>
+
+        <section id="episodios" class="tab-content">
+            <h2>🎬 Episódios Recentes</h2>
+            <div class="episodio">
+                <h3>Episódio 10 - Cultura Pop</h3>
+                <iframe src="https://open.spotify.com/embed/episode/4gKnmJl100iarWltT3dtyc" width="100%" height="80"></iframe>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <p>© 2025 Fala Barato - Todos os direitos reservados.</p>
-        <p>Siga-nos nas redes sociais: <a href="#">Instagram</a> | <a href="#">Twitter</a> | <a href="#">YouTube</a></p>
+        <p>© 2024 Fala Barato - Todos os direitos reservados.</p>
     </footer>
+
+    <!-- 🎵 Player de Música -->
+    <audio id="musica-fundo" loop>
+        <source src="musica_relaxante.mp3" type="audio/mp3">
+    </audio>
+    <div class="music-controls">
+        <button id="play-pause">⏸️</button>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
+    </div>
 </body>
 </html>
+/* Fundo dourado e azul-marinho */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #0d1b2a, #ffcc00);
+    color: white;
+    text-align: center;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #ffcc00;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+/* Player de Música */
+.music-controls {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#play-pause {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+#volume {
+    width: 80px;
+}
+document.addEventListener("DOMContentLoaded", function() {
+    const tabs = document.querySelectorAll(".tab-link");
+    const contents = document.querySelectorAll(".tab-content");
+    const audio = document.getElementById("musica-fundo");
+    const playPauseBtn = document.getElementById("play-pause");
+    const volumeControl = document.getElementById("volume");
+
+    audio.volume = 0.5;
+    audio.play();
+
+    playPauseBtn.addEventListener("click", () => {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.textContent = "⏸️";
+        } else {
+            audio.pause();
+            playPauseBtn.textContent = "▶️";
+        }
+    });
+
+    volumeControl.addEventListener("input", () => {
+        audio.volume = volumeControl.value;
+    });
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            const tabName = tab.getAttribute("data-tab");
+            contents.forEach(content => {
+                content.classList.remove("active");
+                if (content.id === tabName) {
+                    content.classList.add("active");
+                }
+            });
+        });
+    });
+});
